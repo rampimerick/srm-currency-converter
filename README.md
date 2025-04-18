@@ -1,4 +1,6 @@
- 
+## Script de criação de tabelas
+
+```sql 
 CREATE TABLE kingdom (
     kingdom_id              INT PRIMARY KEY AUTO_INCREMENT,
     name            VARCHAR(255) NOT NULL,
