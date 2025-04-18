@@ -1,4 +1,4 @@
-## Script de criação de tabelas
+## Script para criação de tabelas
 
 ```sql 
 CREATE TABLE kingdom (
