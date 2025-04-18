@@ -8,18 +8,23 @@ CREATE TABLE kingdom (
     specialization  VARCHAR(50)  NOT NULL
 );
 CREATE TABLE product (
-    product_id INT PRIMARY KEY,
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
-    kingdom_id INT,
-    PRIMARY KEY (product_id, kingdom_id),
-    FOREIGN KEY (kingdom_id) REFERENCES kingdom (kingdom_id)
+    description TEXT
+);
+
+CREATE TABLE product_kingdom (
+    product_id INT NOT NULL,
+    kingdom_id INT NOT NULL,
+    FOREIGN KEY (product_id) references product (product_id),
+    FOREIGN KEY (kingdom_id) references kingdom (kingdom_id),
+    PRIMARY KEY (product_id, kingdom_id)
 );
 
 CREATE TABLE currency (
     currency_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    value DECIMAL (10,2) NOT NULL
+    base_value DECIMAL (10,2) NOT NULL
 );
 
 create table currency_conversion (
@@ -32,12 +37,14 @@ create table currency_conversion (
     date DATETIME NOT NULL,
 
     FOREIGN KEY (origin_currency_id) REFERENCES currency(currency_id),
-    FOREIGN KEY (destiny_currency_id) REFERENCES currency(currency_id)
+    FOREIGN KEY (destiny_currency_id) REFERENCES currency(currency_id),
+    FOREIGN KEY (product_id, kingdom_id) REFERENCES product_kingdom (product_id, kingdom_id)
 );
 
 CREATE TABLE transaction (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT,
     transaction_date DATETIME NOT NULL,
+    transaction_type VARCHAR(255),
     total_value DECIMAL (10,2) NOT NULL
 );
 
@@ -52,7 +59,7 @@ CREATE TABLE product_transaction (
     total_value DECIMAL (10, 2) NOT NULL,
 
     FOREIGN KEY (transaction_id) REFERENCES transaction (transaction_id),
-    FOREIGN KEY (product_id, kingdom_id) REFERENCES product(product_id, kingdom_id),
+    FOREIGN KEY (product_id, kingdom_id) REFERENCES product_kingdom (product_id, kingdom_id),
     FOREIGN KEY (origin_currency) REFERENCES currency (currency_id),
     FOREIGN KEY (destiny_currency) REFERENCES  currency (currency_id)
 );
