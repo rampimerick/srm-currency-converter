@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
 
-
     @GetMapping("/products/list-products")
     public String getProduct() {
 
