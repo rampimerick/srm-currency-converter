@@ -39,15 +39,15 @@ CREATE TABLE currency_conversion_rate (
     currency_conversion_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     origin_currency_id INT NOT NULL,
     destiny_currency_id INT NOT NULL,
-    date DATE,
-    conversion_rate DECIMAL (10, 2),
+    date DATE NOT NULL,
+    conversion_rate DECIMAL (10, 2) NOT NULL,
 
     FOREIGN KEY (origin_currency_id) REFERENCES currencies (currency_id),
     FOREIGN KEY (destiny_currency_id) REFERENCES currencies (currency_id),
     CONSTRAINT UNIQUE (origin_currency_id,destiny_currency_id,date)
 );
 
-CREATE TABLE transaction (
+CREATE TABLE product_transactions (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT,
     product_kingdom_id INT NOT NULL,
     destiny_currency_id INT NOT NULL,
@@ -73,11 +73,11 @@ INSERT INTO kingdoms (name, race, specialty) VALUES
 
 INSERT INTO products (name, description) VALUES
     ('Espada Élfica', 'Lâmina forjada pelos elfos, leve e afiada.'),
-    ('Machado Anão', 'Mechado confiável utilizado pelos anões me guerra.'),
-    ('Silmarill?', 'Não sei Rick, parece falso...'),
+    ('Machado Anão', 'Machado confiável utilizado pelos anãos em guerra.'),
+    ('Silmarill', 'Não sei Rick, parece falso...'),
     ('Armadura de Gondor', 'Proteção resistente usada pelos guardas de Minas Tirith.'),
     ('Machado de Guerra', 'Machado bruto forjado em Isengard.'),
-    ('Sabre de Luz Azul', 'Arma de energia usada por cavaleiros da paz.'),
+    ('Sabre de Luz Azul', 'Uma arma elegante para tempos mais civilizados'),
     ('Lança de Rohan', 'Arma longa usada pela cavalaria de Rohan.');
 
 INSERT INTO products_by_kingdoms (product_id, kingdom_id, value, origin_currency_id, product_conversion_rate) VALUES

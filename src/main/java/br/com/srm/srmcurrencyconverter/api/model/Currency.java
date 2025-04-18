@@ -7,12 +7,14 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "currencies")
 public class Currency {
 
     @Id
@@ -20,7 +22,5 @@ public class Currency {
     private Integer currencyId;
     @Column()
     private String name;
-    @Column(name = "base_value")
-    private BigDecimal baseValue;
 
 }

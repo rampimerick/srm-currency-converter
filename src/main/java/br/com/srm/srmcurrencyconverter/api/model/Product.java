@@ -5,23 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Integer productId;
+    @Column()
     private String name;
+    @Column()
     private String description;
-    @ManyToOne
-    private ProductValue productValue;
-    private BigDecimal conversionRate;
-    private LocalDate date;
 
 }
