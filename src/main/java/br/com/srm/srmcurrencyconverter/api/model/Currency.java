@@ -23,4 +23,7 @@ public class Currency {
     @Column()
     private String name;
 
+    public Currency(final Integer currencyId) {
+        this.currencyId = currencyId;
+    }
 }

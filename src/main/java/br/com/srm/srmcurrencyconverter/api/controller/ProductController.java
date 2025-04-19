@@ -29,6 +29,6 @@ public class ProductController {
     })
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProduct() {
-        return productService.getAllProducts() != null ? ResponseEntity.ok(productService.getAllProducts()) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 }
