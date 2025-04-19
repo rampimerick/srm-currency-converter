@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "products_by_kingdoms")
+@Table(name = "kingdoms")
 public class Kingdom {
 
     @Id

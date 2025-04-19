@@ -12,16 +12,16 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "products_by_kingdoms")
-public class ProductByKigdom {
+public class ProductByKingdom {
 
     @Id()
     @Column(name = "product_kingdom_id")
     private Integer productKingdomId ;
     @ManyToOne()
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "product_id"))
     private Product product;
     @ManyToOne()
-    @JoinColumn(name = "kingdom_id")
+    @JoinColumn(name = "kingdom_id", foreignKey = @ForeignKey(name = "kingdom_id"))
     private Kingdom kingdom;
     @Column()
     private BigDecimal value;

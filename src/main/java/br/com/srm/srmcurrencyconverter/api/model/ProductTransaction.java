@@ -20,7 +20,7 @@ public class ProductTransaction {
     private Integer transactionId;
     @ManyToOne()
     @JoinColumn(name = "product_kingdom_id")
-    private ProductByKigdom productKingdom;
+    private ProductByKingdom productKingdom;
     @ManyToOne()
     @JoinColumn(name = "destiny_currency_id")
     private Currency destinyCurrency;
