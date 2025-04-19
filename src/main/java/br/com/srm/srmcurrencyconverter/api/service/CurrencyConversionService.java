@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,10 +34,12 @@ public class CurrencyConversionService {
     }
 
     @Transactional
-    public CurrencyConversionRate createCurrencyRate(final CurrencyRate currencyRate) {
-        Currency originCurrency = currencyRepository.findById(currencyRate.getOriginCurrencyId()).orElseThrow();
-        Currency destinyCurrency = currencyRepository.findById(currencyRate.getDestinyCurrencyId()).orElseThrow();
+    public List<CurrencyConversionRate> createCurrencyRate(@Valid @NotNull final CurrencyRate currencyRate) {
+        Currency originCurrency = currencyRepository.findById(currencyRate.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
+        Currency destinyCurrency = currencyRepository.findById(currencyRate.getDestinyCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
         currencyRepository.findById(currencyRate.getOriginCurrencyId()).orElseThrow();
-        return currencyConversionRateRepository.save( new CurrencyConversionRate(currencyRate, originCurrency, destinyCurrency));
+        CurrencyConversionRate currencyConversionRate = new CurrencyConversionRate(currencyRate, originCurrency, destinyCurrency);
+        List<CurrencyConversionRate> currenciesRates = Arrays.asList(currencyConversionRate, currencyConversionRate.reverseCurrencyRate());
+        return currencyConversionRateRepository.saveAll(currenciesRates);
     }
 }

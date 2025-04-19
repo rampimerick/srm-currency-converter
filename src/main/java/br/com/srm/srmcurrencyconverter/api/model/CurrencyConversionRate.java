@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Getter
@@ -43,7 +44,7 @@ public class CurrencyConversionRate {
         reverseCurrencyRate.originCurrency = this.destinyCurrency;
         reverseCurrencyRate.destinyCurrency =  this.originCurrency;
         reverseCurrencyRate.date = this.date;
-        reverseCurrencyRate.conversionRate = BigDecimal.ONE.divide(this.conversionRate);
+        reverseCurrencyRate.conversionRate = BigDecimal.ONE.divide(this.conversionRate, 2, RoundingMode.HALF_UP);
         return reverseCurrencyRate;
     }
 }

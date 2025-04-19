@@ -44,9 +44,9 @@ public class CurrencyController {
     }
 
     @PostMapping("/rates")
-    public ResponseEntity<CurrencyConversionRate> getCurrencyConversionRate(@RequestBody CurrencyRate currencyConversionRate) {
-        CurrencyConversionRate currencyRate = currencyConversionService.createCurrencyRate(currencyConversionRate);
-        URI uri = UriComponentsBuilder.newInstance().path("/api/v1/currencies/{originCurrencyId}/rates").buildAndExpand(currencyRate.getCurrencyConversionId()).toUri();
+    public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRate(@RequestBody CurrencyRate currencyConversionRate) {
+        List<CurrencyConversionRate> currencyRate = currencyConversionService.createCurrencyRate(currencyConversionRate);
+        URI uri = UriComponentsBuilder.newInstance().path("/api/v1/currencies/{originCurrencyId}/rates").buildAndExpand(currencyRate.get(0).getCurrencyConversionId()).toUri();
         return ResponseEntity.created(uri).body(currencyRate);
     }
 }
