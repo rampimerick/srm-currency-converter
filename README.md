@@ -82,12 +82,15 @@ INSERT INTO products (name, description) VALUES
 
 INSERT INTO products_by_kingdoms (product_id, kingdom_id, value, origin_currency_id, product_conversion_rate) VALUES
     (2, 1, 1500.00, 1, 0.0),
-    (4, 2, 1000.00, 1, 0.0),
     (1, 2, 800.00, 1, 0.0),
     (5, 3, 600.00, 2, 0.0),
     (6, 4, 2000.00, 1, 0.0),
     (7, 5, 400.00, 2, 0.0),
-    (4, 5, 900.00, 2, 0.0);
+    (4, 5, 900.00, 2, 0.0),
+    (4, 5, 1000.00, 1, 0.3),
+    (4, 1, 1000.00, 1, 0.0),
+    (4, 3, 1000.00, 1, 0.0),
+    (4, 4, 1000.00, 1, 0.0);
 
 INSERT INTO currency_conversion_rate (origin_currency_id, destiny_currency_id, date, conversion_rate) VALUES
     (1, 2, '2025-04-01', 0.40);
