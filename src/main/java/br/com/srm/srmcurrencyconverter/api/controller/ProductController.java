@@ -1,23 +1,26 @@
 package br.com.srm.srmcurrencyconverter.api.controller;
 
 
+import br.com.srm.srmcurrencyconverter.api.dto.request.ProductDto;
+import br.com.srm.srmcurrencyconverter.api.dto.request.ProductKingdomDto;
 import br.com.srm.srmcurrencyconverter.api.model.Product;
-import br.com.srm.srmcurrencyconverter.api.model.ProductByKingdom;
-import br.com.srm.srmcurrencyconverter.api.service.ProductByKingdomService;
+import br.com.srm.srmcurrencyconverter.api.model.ProductKingdom;
+import br.com.srm.srmcurrencyconverter.api.service.ProductKingdomService;
 import br.com.srm.srmcurrencyconverter.api.service.ProductService;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
@@ -25,7 +28,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductByKingdomService productByKingdomService;
+    private final ProductKingdomService productKingdomService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de produtos retornada com sucesso"),
@@ -37,7 +40,16 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<List<ProductByKingdom>> getProductByProductId(@PathVariable  final Integer productId) {
-        return ResponseEntity.ok(productByKingdomService.getAllProductsByProductId(productId));
+    public ResponseEntity<List<ProductKingdom>> getProductByProductId(@PathVariable final Integer productId) {
+        return ResponseEntity.ok(productKingdomService.getAllProductsByProductId(productId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDto product) {
+        Product productSave = productService.saveProduct(product);
+        URI uri = UriComponentsBuilder.newInstance().path("/api/v1/currencies/{productId}").buildAndExpand(productSave.getProductId()).toUri();
+        return ResponseEntity.created(uri).body(productSave);
     }
 }
+
+

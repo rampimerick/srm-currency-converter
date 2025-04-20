@@ -1,7 +1,6 @@
 package br.com.srm.srmcurrencyconverter.api.model;
 
-import br.com.srm.srmcurrencyconverter.api.dto.request.CurrencyRate;
-import lombok.AllArgsConstructor;
+import br.com.srm.srmcurrencyconverter.api.dto.request.CurrencyRateDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,15 +27,17 @@ public class CurrencyConversionRate {
     @ManyToOne
     @JoinColumn(name = "destiny_currency_id")
     private Currency  destinyCurrency;
+    @Column(name = "date")
     private LocalDate date;
+    @Column(name = "conversion_rate")
     private BigDecimal conversionRate;
 
 
-    public CurrencyConversionRate(final CurrencyRate currencyRate, Currency originCurrency, Currency destinyCurrency) {
+    public CurrencyConversionRate(final CurrencyRateDto currencyRateDto, Currency originCurrency, Currency destinyCurrency) {
         this.originCurrency = originCurrency;
         this.destinyCurrency = destinyCurrency;
-        this.date = currencyRate.getDate();
-        this.conversionRate = currencyRate.getConversionRate();
+        this.date = currencyRateDto.getDate();
+        this.conversionRate = currencyRateDto.getConversionRate();
     }
 
     public CurrencyConversionRate reverseCurrencyRate () {

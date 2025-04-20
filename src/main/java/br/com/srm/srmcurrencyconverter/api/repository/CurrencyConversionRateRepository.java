@@ -11,4 +11,5 @@ import java.util.List;
 public interface CurrencyConversionRateRepository extends JpaRepository<CurrencyConversionRate, Integer> {
 
     List<CurrencyConversionRate> findAllByOriginCurrencyCurrencyIdAndDateBetween(Integer originCurrencyId, LocalDate dateAfter, LocalDate dateBefore);
+    List<CurrencyConversionRate> findAllByOriginCurrencyCurrencyId(Integer originCurrencyId);
 }

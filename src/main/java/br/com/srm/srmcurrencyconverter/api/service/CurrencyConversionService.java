@@ -1,7 +1,7 @@
 package br.com.srm.srmcurrencyconverter.api.service;
 
 
-import br.com.srm.srmcurrencyconverter.api.dto.request.CurrencyRate;
+import br.com.srm.srmcurrencyconverter.api.dto.request.CurrencyRateDto;
 import br.com.srm.srmcurrencyconverter.api.model.Currency;
 import br.com.srm.srmcurrencyconverter.api.model.CurrencyConversionRate;
 import br.com.srm.srmcurrencyconverter.api.repository.CurrencyConversionRateRepository;
@@ -34,12 +34,16 @@ public class CurrencyConversionService {
     }
 
     @Transactional
-    public List<CurrencyConversionRate> createCurrencyRate(@Valid @NotNull final CurrencyRate currencyRate) {
-        Currency originCurrency = currencyRepository.findById(currencyRate.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
-        Currency destinyCurrency = currencyRepository.findById(currencyRate.getDestinyCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
-        currencyRepository.findById(currencyRate.getOriginCurrencyId()).orElseThrow();
-        CurrencyConversionRate currencyConversionRate = new CurrencyConversionRate(currencyRate, originCurrency, destinyCurrency);
+    public List<CurrencyConversionRate> createCurrencyRate(@Valid @NotNull final CurrencyRateDto currencyRateDto) {
+        Currency originCurrency = currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
+        Currency destinyCurrency = currencyRepository.findById(currencyRateDto.getDestinyCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
+        currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow();
+        CurrencyConversionRate currencyConversionRate = new CurrencyConversionRate(currencyRateDto, originCurrency, destinyCurrency);
         List<CurrencyConversionRate> currenciesRates = Arrays.asList(currencyConversionRate, currencyConversionRate.reverseCurrencyRate());
         return currencyConversionRateRepository.saveAll(currenciesRates);
+    }
+
+    public List<CurrencyConversionRate> getAllCurrencyRateByOriginCurrencyId(final Integer originCurrencyId) {
+        return currencyConversionRateRepository.findAllByOriginCurrencyCurrencyId(originCurrencyId);
     }
 }

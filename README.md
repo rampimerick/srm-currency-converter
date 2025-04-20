@@ -47,17 +47,25 @@ CREATE TABLE currency_conversion_rate (
     CONSTRAINT UNIQUE (origin_currency_id,destiny_currency_id,date)
 );
 
-CREATE TABLE product_transactions (
-    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
-    product_kingdom_id INT NOT NULL,
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
     destiny_currency_id INT NOT NULL,
-    transaction_date DATE NOT NULL,
-    transaction_type VARCHAR(255),
+    order_date DATE NOT NULL,
+    order_type VARCHAR(255),
+    total DECIMAL (10, 2) NOT NULL,
+
+    FOREIGN KEY (destiny_currency_id) REFERENCES currencies (currency_id)
+
+);
+
+CREATE TABLE products_order (
+    products_order_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_kingdom_id INT NOT NULL,
     product_quantity INT NOT NULL,
 
     FOREIGN KEY (product_kingdom_id) REFERENCES products_by_kingdoms (product_kingdom_id),
-    FOREIGN KEY (destiny_currency_id) REFERENCES currencies (currency_id)
-
+    FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
 
 
@@ -118,3 +126,4 @@ INSERT INTO currency_conversion_rate (origin_currency_id, destiny_currency_id, d
     (2, 1, '2025-04-17', 0.40),
     (2, 1, '2025-04-18', 0.40),
     (2, 1, '2025-04-19', 0.39);
+

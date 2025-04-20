@@ -1,5 +1,6 @@
 package br.com.srm.srmcurrencyconverter.api.model;
 
+import br.com.srm.srmcurrencyconverter.api.dto.request.ProductKingdomDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,10 +13,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "products_by_kingdoms")
-public class ProductByKingdom {
+public class ProductKingdom {
 
     @Id()
     @Column(name = "product_kingdom_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productKingdomId ;
     @ManyToOne()
     @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "product_id"))
@@ -30,4 +32,12 @@ public class ProductByKingdom {
     private Currency originCurrency;
     @Column()
     private BigDecimal productConversionRate;
+
+    public ProductKingdom(final ProductKingdomDto productKingdomDto, Product product, Kingdom kingdom, Currency originCurrency) {
+        this.product = product;
+        this.kingdom = kingdom;
+        this.value = productKingdomDto.getValue();
+        this.originCurrency = originCurrency;
+        this.productConversionRate = productKingdomDto.getProductConversionRate();
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.srm.srmcurrencyconverter.api.model;
 
+import br.com.srm.srmcurrencyconverter.api.dto.request.ProductDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,8 @@ public class Product {
     @Column()
     private String description;
 
+    public Product(ProductDto productDto) {
+        this.name = productDto.getName();
+        this.description = productDto.getDescription();
+    }
 }

@@ -1,6 +1,6 @@
 package br.com.srm.srmcurrencyconverter.api.model.enums;
 
-public enum TransactionType {
+public enum OrderType {
     PURCHASE,
     SALE
 }
