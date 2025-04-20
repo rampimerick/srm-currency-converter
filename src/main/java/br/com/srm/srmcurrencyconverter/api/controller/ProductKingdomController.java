@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @Validated
 @RestController
@@ -21,6 +22,11 @@ import java.net.URI;
 public class ProductKingdomController {
 
     private final ProductKingdomService productKingdomService;
+
+    @GetMapping()
+    public ResponseEntity<List<ProductKingdom>> getAllProductKingdoms() {
+        return ResponseEntity.ok(productKingdomService.getAll());
+    }
 
     @GetMapping("/{productKingdomId}")
     public ResponseEntity<ProductKingdom> getProductKingdomById(@PathVariable final Integer productKingdomId) {

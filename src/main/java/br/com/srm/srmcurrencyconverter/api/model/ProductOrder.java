@@ -1,5 +1,6 @@
 package br.com.srm.srmcurrencyconverter.api.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,13 +16,19 @@ public class ProductOrder {
 
     @Id
     @Column(name = "products_order_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productOrderId;
-    @ManyToOne()
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @Column(name = "order_id")
+    private Integer orderId;
     @ManyToOne()
     @JoinColumn(name = "product_kingdom_id")
-    private ProductKingdom productId;
-    @Column(name = "product_quantity")
-    private Integer quantity;
+    private ProductKingdom product;
+    @Column(name = "amount")
+    private Integer amount;
+
+    public ProductOrder(Integer orderId, ProductKingdom product, Integer quantity) {
+        this.orderId = orderId;
+        this.product = product;
+        this.amount = quantity;
+    }
 }

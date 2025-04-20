@@ -52,17 +52,16 @@ CREATE TABLE orders (
     destiny_currency_id INT NOT NULL,
     order_date DATE NOT NULL,
     order_type VARCHAR(255),
-    total DECIMAL (10, 2) NOT NULL,
+    total DECIMAL (10, 2),
 
     FOREIGN KEY (destiny_currency_id) REFERENCES currencies (currency_id)
-
 );
 
 CREATE TABLE products_order (
     products_order_id INT PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
     product_kingdom_id INT NOT NULL,
-    product_quantity INT NOT NULL,
+    amount INT NOT NULL,
 
     FOREIGN KEY (product_kingdom_id) REFERENCES products_by_kingdoms (product_kingdom_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id)

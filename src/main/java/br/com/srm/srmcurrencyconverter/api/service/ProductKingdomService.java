@@ -48,4 +48,8 @@ public class ProductKingdomService {
 
         return productByKingdomRepository.save(new ProductKingdom(productKingdomDto, product, kingdom, currency));
     }
+
+    public List<ProductKingdom> getAll() {
+        return productByKingdomRepository.findAll();
+    }
 }
