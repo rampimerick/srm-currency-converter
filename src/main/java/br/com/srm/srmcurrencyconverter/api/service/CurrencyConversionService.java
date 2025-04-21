@@ -33,6 +33,10 @@ public class CurrencyConversionService {
         return currencyConversionRateRepository.findAllByOriginCurrencyCurrencyIdAndDateBetween(originCurrencyId, startDate, endDate);
     }
 
+    public List<CurrencyConversionRate> getCurrencyByDate(final LocalDate date ) {
+        return currencyConversionRateRepository.findAllByDate(date);
+    }
+
     @Transactional
     public List<CurrencyConversionRate> createCurrencyRate(@Valid @NotNull final CurrencyRateDto currencyRateDto) {
         Currency originCurrency = currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));

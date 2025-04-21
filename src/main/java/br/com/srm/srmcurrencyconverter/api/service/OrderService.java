@@ -1,6 +1,8 @@
 package br.com.srm.srmcurrencyconverter.api.service;
 
 import br.com.srm.srmcurrencyconverter.api.dto.request.NewOrderDto;
+import br.com.srm.srmcurrencyconverter.api.dto.response.OrderResponseDto;
+import br.com.srm.srmcurrencyconverter.api.dto.response.ProductOrderDto;
 import br.com.srm.srmcurrencyconverter.api.model.*;
 import br.com.srm.srmcurrencyconverter.api.model.Currency;
 import br.com.srm.srmcurrencyconverter.api.model.enums.OrderType;
@@ -26,6 +28,18 @@ public class OrderService {
     public Order getOrderById(Integer orderId) {
         return orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
     }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public OrderResponseDto getOrderAndProducts(final Integer orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        List<ProductOrderDto> productsDetails = orderRepository.findProductsDetails(orderId);
+
+        return new OrderResponseDto(order, productsDetails);
+    }
+
 
     @Transactional
     public Order createOrder(final NewOrderDto newOrderDto) {

@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Validated
@@ -43,11 +44,16 @@ public class CurrencyController {
         return ResponseEntity.ok(currencyConversionService.getAllCurrencyRateByOriginCurrencyId(originCurrencyId));
     }
 
-    @GetMapping("{originCurrencyId}/rates")
-    public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRate(@PathVariable Integer originCurrencyId,
-                                                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
-        return ResponseEntity.ok(currencyConversionService.getCurrencyRateByOriginCurrencyIdAndPeriod(originCurrencyId, startDate, endDate));
+    @GetMapping("/rates/today")
+    public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRateToday() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate today = LocalDate.parse(LocalDate.now().format(formatter));
+        return ResponseEntity.ok(currencyConversionService.getCurrencyByDate(today));
+    }
+
+    @GetMapping("/rates/date")
+    public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRateByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return ResponseEntity.ok(currencyConversionService.getCurrencyByDate(date));
     }
 
     @PostMapping("/rates")

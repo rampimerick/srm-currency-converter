@@ -1,6 +1,7 @@
 package br.com.srm.srmcurrencyconverter.api.controller;
 
 import br.com.srm.srmcurrencyconverter.api.dto.request.NewOrderDto;
+import br.com.srm.srmcurrencyconverter.api.dto.response.OrderResponseDto;
 import br.com.srm.srmcurrencyconverter.api.model.Order;
 import br.com.srm.srmcurrencyconverter.api.service.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,11 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable final Integer orderId) {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
+    }
+
+    @GetMapping("/{orderId}/detail")
+    public ResponseEntity<OrderResponseDto> getOrderProductsDetailById(@PathVariable final Integer orderId) {
+        return ResponseEntity.ok(orderService.getOrderAndProducts(orderId));
     }
 
     @PostMapping

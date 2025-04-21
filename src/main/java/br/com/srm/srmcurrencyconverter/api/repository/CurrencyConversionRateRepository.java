@@ -14,4 +14,6 @@ public interface CurrencyConversionRateRepository extends JpaRepository<Currency
     List<CurrencyConversionRate> findAllByOriginCurrencyCurrencyIdAndDateBetween(Integer originCurrencyId, LocalDate startDate, LocalDate endDate);
     Optional<CurrencyConversionRate> findByOriginCurrencyCurrencyIdAndDate(Integer originCurrencyCurrencyId, LocalDate date);
     List<CurrencyConversionRate> findAllByOriginCurrencyCurrencyId(Integer originCurrencyId);
+
+    List<CurrencyConversionRate> findAllByDate(LocalDate date);
 }
