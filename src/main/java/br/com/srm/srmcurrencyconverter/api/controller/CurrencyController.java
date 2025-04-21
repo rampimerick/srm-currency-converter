@@ -45,7 +45,7 @@ public class CurrencyController {
                     description = "Internal server error")
     })
     @GetMapping()
-    public ResponseEntity<List<Currency>> getProduct() {
+    public ResponseEntity<List<Currency>> getCurrencies() {
         return ResponseEntity.ok(currencyService.getAllCurrencies());
     }
 

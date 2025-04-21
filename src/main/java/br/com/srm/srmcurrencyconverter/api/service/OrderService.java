@@ -30,10 +30,6 @@ public class OrderService {
         return orderRepository.findById(orderId).orElseThrow(() -> new DataNotFoundException("Order not found", "orderId", orderId));
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
     public OrderResponseDto getOrderAndProducts(final Integer orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new DataNotFoundException("Order not found", "orderId", orderId));
         List<ProductOrderDto> productsDetails = orderRepository.findProductsDetails(orderId);

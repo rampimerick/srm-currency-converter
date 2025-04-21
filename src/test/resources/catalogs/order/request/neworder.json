@@ -1,0 +1,23 @@
+{
+  "destinyCurrencyId": 2,
+  "orderDate": "2025-04-20",
+  "orderType": "SALE",
+  "products": [
+    {
+      "productKingdomId": 1,
+      "quantity": 2
+    },
+    {
+      "productKingdomId": 3,
+      "quantity": 2
+    },
+    {
+      "productKingdomId": 11,
+      "quantity": 4
+    },
+    {
+      "productKingdomId": 13,
+      "quantity": 2
+    }
+  ]
+}

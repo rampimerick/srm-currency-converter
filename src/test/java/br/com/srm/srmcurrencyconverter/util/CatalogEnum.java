@@ -10,7 +10,12 @@ import java.util.stream.Collectors;
 
 public enum CatalogEnum {
 
-    CURRENCY_REQUEST;
+    ORDER_REQUEST_NEWORDER,
+    KINGDOM_REQUEST_NEWKINGDOM,
+    CURRENCY_REQUEST_NEWCURRENCYRATE,
+    PRODUCT_REQUEST_NEWPRODUCT,
+    PRODUCTKINGDOM_REQUEST_NEWPRODUCTKINGDOM;
+
 
     public String getFileAsString() throws FileNotFoundException {
         final String[] segments = name().toLowerCase().split("_");
