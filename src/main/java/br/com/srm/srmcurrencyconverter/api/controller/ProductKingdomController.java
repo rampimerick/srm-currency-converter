@@ -23,54 +23,54 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products-kingdoms")
-@Tag(name = "Produtos de Reinos", description = "Gerencia os vínculos entre produtos e reinos")
+@Tag(name = "ProductsKingdoms", description = "Manages the relationships between products and kingdoms.")
 public class ProductKingdomController {
 
     private final ProductKingdomService productKingdomService;
 
-    @Operation(summary = "Obter todos os produtos de reinos",
-            description = "Este endpoint retorna uma lista com todos os produtos de reinos cadastrados.")
+    @Operation(summary = "Get all kingdom products",
+            description = "This endpoint returns a list of all registered kingdom products.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Lista de produtos de reinos obtida com sucesso",
+                    description = "Kingdom products list retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ProductKingdom.class))),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping()
     public ResponseEntity<List<ProductKingdom>> getAllProductKingdoms() {
         return ResponseEntity.ok(productKingdomService.getAll());
     }
 
-    @Operation(summary = "Obter produto de reino por ID",
-            description = "Este endpoint retorna um produto de reino específico com base no ID fornecido.")
+    @Operation(summary = "Get kingdom product by ID",
+            description = "This endpoint returns a specific kingdom product based on the provided ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Produto de reino encontrado com sucesso",
+                    description = "Kingdom product found successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ProductKingdom.class))),
             @ApiResponse(responseCode = "404",
-                    description = "Produto de reino não encontrado"),
+                    description = "Kingdom product not found"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/{productKingdomId}")
     public ResponseEntity<ProductKingdom> getProductKingdomById(@PathVariable final Integer productKingdomId) {
         return ResponseEntity.ok(productKingdomService.getProductKingdomById(productKingdomId));
     }
 
-    @Operation(summary = "Criar um novo produto de reino",
-            description = "Este endpoint cria um novo produto de reino com as informações fornecidas e retorna o produto criado com status 201 Created.")
+    @Operation(summary = "Create a new kingdom product",
+            description = "This endpoint creates a new kingdom product with the provided information and returns the created product with a 201 Created status.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Produto de reino criado com sucesso",
+                    description = "Kingdom product created successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ProductKingdom.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Requisição mal-formada (dados inválidos fornecidos)"),
+                    description = "Bad request (invalid data provided)"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @PostMapping()
     public ResponseEntity<ProductKingdom> createProductKingdom(@RequestBody @Valid ProductKingdomDto productKingdomDto) {

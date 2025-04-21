@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductKingdomOrderDto {
 
-    @NotNull
+    @NotNull(message = "ProductKingdomId is required")
     @JsonProperty("productKingdomId")
     private Integer productKingdomId;
     @Min(1)

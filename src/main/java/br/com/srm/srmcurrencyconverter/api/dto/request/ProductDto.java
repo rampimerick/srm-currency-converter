@@ -16,12 +16,12 @@ import javax.validation.constraints.NotNull;
 public class ProductDto {
 
     @JsonProperty("name")
-    @NotNull(message = "O nome é obrigatório")
-    @NotEmpty(message = "O nome é obrigatório")
+    @NotNull(message = "Name is required")
+    @NotEmpty(message = "Name is required")
     private String name;
 
     @JsonProperty("description")
-    @NotNull(message = "A descrição é obrigatória")
-    @NotEmpty(message = "O nome é obrigatório")
+    @NotNull(message = "Description is required")
+    @NotEmpty(message = "Description is required")
     private String description;
 }

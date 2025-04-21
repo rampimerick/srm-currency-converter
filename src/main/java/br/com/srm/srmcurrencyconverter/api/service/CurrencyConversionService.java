@@ -6,6 +6,7 @@ import br.com.srm.srmcurrencyconverter.api.model.Currency;
 import br.com.srm.srmcurrencyconverter.api.model.CurrencyConversionRate;
 import br.com.srm.srmcurrencyconverter.api.repository.CurrencyConversionRateRepository;
 import br.com.srm.srmcurrencyconverter.api.repository.CurrencyRepository;
+import br.com.srm.srmcurrencyconverter.config.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,18 +30,18 @@ public class CurrencyConversionService {
         return currencyConversionRateRepository.findAll();
     }
 
-    public List<CurrencyConversionRate> getCurrencyRateByOriginCurrencyIdAndPeriod(final Integer originCurrencyId, final LocalDate startDate, final LocalDate endDate ) {
-        return currencyConversionRateRepository.findAllByOriginCurrencyCurrencyIdAndDateBetween(originCurrencyId, startDate, endDate);
-    }
-
     public List<CurrencyConversionRate> getCurrencyByDate(final LocalDate date ) {
-        return currencyConversionRateRepository.findAllByDate(date);
+        List<CurrencyConversionRate> allByDate = currencyConversionRateRepository.findAllByDate(date);
+        if(allByDate.isEmpty()) {
+            throw new DataNotFoundException("Currency Rate not found for the date: " + date , "date", 1);
+        }
+        return allByDate;
     }
 
     @Transactional
     public List<CurrencyConversionRate> createCurrencyRate(@Valid @NotNull final CurrencyRateDto currencyRateDto) {
-        Currency originCurrency = currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
-        Currency destinyCurrency = currencyRepository.findById(currencyRateDto.getDestinyCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
+        Currency originCurrency = currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow(() -> new DataNotFoundException("Currency not found", "originCurrencyId", currencyRateDto.getOriginCurrencyId()));
+        Currency destinyCurrency = currencyRepository.findById(currencyRateDto.getDestinyCurrencyId()).orElseThrow(() -> new DataNotFoundException("Currency not found", "destinyCurrencyId", currencyRateDto.getDestinyCurrencyId()));
         currencyRepository.findById(currencyRateDto.getOriginCurrencyId()).orElseThrow();
         CurrencyConversionRate currencyConversionRate = new CurrencyConversionRate(currencyRateDto, originCurrency, destinyCurrency);
         List<CurrencyConversionRate> currenciesRates = Arrays.asList(currencyConversionRate, currencyConversionRate.reverseCurrencyRate());
@@ -48,6 +49,10 @@ public class CurrencyConversionService {
     }
 
     public List<CurrencyConversionRate> getAllCurrencyRateByOriginCurrencyId(final Integer originCurrencyId) {
-        return currencyConversionRateRepository.findAllByOriginCurrencyCurrencyId(originCurrencyId);
+        List<CurrencyConversionRate> allByOriginCurrencyCurrencyId = currencyConversionRateRepository.findAllByOriginCurrencyCurrencyId(originCurrencyId);
+        if (allByOriginCurrencyCurrencyId.isEmpty()) {
+            throw new DataNotFoundException("Currency Rate not found", "originCurrencyId", originCurrencyId);
+        }
+        return allByOriginCurrencyCurrencyId;
     }
 }

@@ -9,6 +9,7 @@ import br.com.srm.srmcurrencyconverter.api.repository.CurrencyRepository;
 import br.com.srm.srmcurrencyconverter.api.repository.KingdomRepository;
 import br.com.srm.srmcurrencyconverter.api.repository.ProductKingdomRepository;
 import br.com.srm.srmcurrencyconverter.api.repository.ProductRepository;
+import br.com.srm.srmcurrencyconverter.config.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ProductKingdomService {
 
 
     public ProductKingdom getProductKingdomById(final Integer productKingdomId) {
-        return productByKingdomRepository.findById(productKingdomId).orElseThrow(() -> new RuntimeException("Product Kingdom not found"));
+        return productByKingdomRepository.findById(productKingdomId).orElseThrow(() -> new DataNotFoundException("ProductKingdom not found", "productKingdomId", productKingdomId));
     }
 
     public List<ProductKingdom> getAllProductsByKingdomId(final Integer kingdomId) {
@@ -42,9 +43,9 @@ public class ProductKingdomService {
     @Transactional
     public ProductKingdom createProductKingdom(ProductKingdomDto productKingdomDto) {
 
-        Product product = productRepository.findById(productKingdomDto.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
-        Kingdom kingdom = kingdomRepository.findById(productKingdomDto.getKingdomId()).orElseThrow(() -> new RuntimeException("Kingdom not found"));
-        Currency currency = currencyRepository.findById(productKingdomDto.getOriginCurrencyId()).orElseThrow(() -> new RuntimeException("Currency not found"));
+        Product product = productRepository.findById(productKingdomDto.getProductId()).orElseThrow(() -> new DataNotFoundException("Product not found", "productId", productKingdomDto.getProductId()));
+        Kingdom kingdom = kingdomRepository.findById(productKingdomDto.getKingdomId()).orElseThrow(() -> new DataNotFoundException("Kingdom not found", "kingdomId", productKingdomDto.getKingdomId()));
+        Currency currency = currencyRepository.findById(productKingdomDto.getOriginCurrencyId()).orElseThrow(() -> new DataNotFoundException("Currency not found", "originCurrencyId", productKingdomDto.getOriginCurrencyId()));
 
         return productByKingdomRepository.save(new ProductKingdom(productKingdomDto, product, kingdom, currency));
     }

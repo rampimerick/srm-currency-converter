@@ -19,17 +19,17 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewOrderDto {
 
-    @NotNull
+    @NotNull(message = "Destiny currency is required")
     @Min(1)
     @JsonProperty("destinyCurrencyId")
     private Integer destinyCurrencyId;
-    @NotNull
+    @NotNull(message = "Order date is required")
     @JsonProperty("orderDate")
     private LocalDate orderDate;
-    @NotNull
+    @NotNull(message = "Order type is required")
     @JsonProperty("orderType")
     private OrderType orderType;
-    @NotEmpty
+    @NotEmpty(message = "Products are required")
     @JsonProperty("products")
     private List<ProductKingdomOrderDto> products;
 

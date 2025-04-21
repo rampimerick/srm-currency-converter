@@ -19,25 +19,25 @@ import java.math.BigDecimal;
 public class ProductKingdomDto {
 
     @JsonProperty(value = "productId")
-    @NotNull(message = "O ID do produto é obrigatório")
+    @NotNull(message = "Product ID is required")
     private Integer productId;
 
     @JsonProperty(value = "kingdomId")
-    @NotNull(message = "O ID do reino é obrigatório")
+    @NotNull(message = "Kingdom ID is required")
     private Integer kingdomId;
 
     @JsonProperty(value = "value")
-    @NotNull(message = "O Valor do produto é obrigatório")
-    @Positive(message = "O valor do produto precisa ser maior que zero")
+    @NotNull(message = "Product value is required")
+    @Positive(message = "Product value must be greater than zero")
     private BigDecimal value;
 
     @JsonProperty(value = "productConversionRate")
     @NotNull
-    @PositiveOrZero(message = "O valor de conversão específico precisa ser maior ou igual a zero")
+    @PositiveOrZero(message = "Product conversion rate must be greater than or equal to zero")
     private BigDecimal productConversionRate;
 
     @JsonProperty(value = "originCurrencyId")
-    @NotNull(message = "O ID da moeda de origem é obrigatório")
+    @NotNull(message = "Origin currency ID is required")
     private Integer originCurrencyId;
 
 

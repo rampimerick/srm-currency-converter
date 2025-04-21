@@ -23,57 +23,57 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/orders")
-@Tag(name = "Transações", description = "Gerencia as transações")
+@Tag(name = "Orders", description = "Manage all orders")
 public class OrderController {
 
     private final OrderService orderService;
 
 
-    @Operation(summary = "Obter pedido por ID",
-            description = "Este endpoint retorna um pedido específico com base no ID fornecido.")
+    @Operation(summary = "Get order by ID",
+            description = "This endpoint returns a specific order based on the provided ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Pedido encontrado com sucesso",
+                    description = "Order found successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Order.class))),
             @ApiResponse(responseCode = "404",
-                    description = "Pedido não encontrado"),
+                    description = "Order not found"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable final Integer orderId) {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
-    @Operation(summary = "Obter detalhes do pedido e produtos",
-            description = "Este endpoint retorna os detalhes do pedido, incluindo os produtos associados a esse pedido, com base no ID do pedido.")
+    @Operation(summary = "Get order details and products",
+            description = "This endpoint returns order details, including the products associated with that order, based on the order ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Detalhes do pedido e produtos obtidos com sucesso",
+                    description = "Order details and products retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = OrderResponseDto.class))),
             @ApiResponse(responseCode = "404",
-                    description = "Pedido não encontrado"),
+                    description = "Order not found"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/{orderId}/detail")
     public ResponseEntity<OrderResponseDto> getOrderProductsDetailById(@PathVariable final Integer orderId) {
         return ResponseEntity.ok(orderService.getOrderAndProducts(orderId));
     }
 
-    @Operation(summary = "Criar um novo pedido",
-            description = "Este endpoint cria um novo pedido com as informações fornecidas e retorna o pedido criado com status 201 Created.")
+    @Operation(summary = "Create a new order",
+            description = "This endpoint creates a new order with the provided information and returns the created order with status 201 Created.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Pedido criado com sucesso",
+                    description = "Order created successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Order.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Requisição mal-formada (dados inválidos fornecidos)"),
+                    description = "Bad request (invalid data provided)"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @PostMapping
     public ResponseEntity<Order> createNewOrder(@RequestBody @Valid final NewOrderDto newOrderDto){

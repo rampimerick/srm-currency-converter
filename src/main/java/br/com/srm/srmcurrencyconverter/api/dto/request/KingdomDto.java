@@ -16,17 +16,17 @@ import javax.validation.constraints.NotNull;
 public class KingdomDto {
 
     @JsonProperty("name")
-    @NotNull(message = "O nome do reino é obrigatório")
-    @NotEmpty(message = "O nome do reino é obrigatório")
+    @NotNull(message = "Kingdom name is required")
+    @NotEmpty(message = "Kingdom name cannot be empty")
     private String name;
 
     @JsonProperty("race")
-    @NotNull(message = "A raça é obrigatória")
-    @NotEmpty(message = "A raça é obrigatória")
+    @NotNull(message = "Race is required")
+    @NotEmpty(message = "Race cannot be empty")
     private String race;
 
     @JsonProperty("specialty")
-    @NotNull(message = "A especialidade do reino é obrigatória")
-    @NotEmpty(message = "A especialidade do reino é obrigatória")
+    @NotNull(message = "Kingdom specialty is required")
+    @NotEmpty(message = "Kingdom specialty cannot be empty")
     private String specialty;
 }

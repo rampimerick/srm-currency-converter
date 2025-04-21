@@ -29,43 +29,43 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
-@Tag(name = "Produtos", description = "Gerencia os produtos disponíveis")
+@Tag(name = "Products", description = "Manage all available products.")
 public class ProductController {
 
     private final ProductService productService;
     private final ProductKingdomService productKingdomService;
 
-    @Operation(summary = "Obter histórico de produtos cadastrados no sistema", description = "Retorna uma lista de todas os produtos cadastrados anterioremente")
+    @Operation(summary = "Get product history", description = "Returns a list of all previously registered products")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de produtos retornada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum produto encontrado")
+            @ApiResponse(responseCode = "200", description = "Product list returned successfully"),
+            @ApiResponse(responseCode = "404", description = "No products found")
     })
     @GetMapping()
     public ResponseEntity<List<Product>> getProduct() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @Operation(summary = "Obter todos os produtos por reino atráves do id do produto ", description = "Retorna os produtos por reino encontrados para o ID de produto informado")
+    @Operation(summary = "Get all kingdom products by product ID", description = "Returns the kingdom products found for the specified product ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de produtos retornada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum produto encontrado")
+            @ApiResponse(responseCode = "200", description = "Product list returned successfully"),
+            @ApiResponse(responseCode = "404", description = "No products found")
     })
     @GetMapping("/{productId}")
     public ResponseEntity<List<ProductKingdom>> getProductByProductId(@PathVariable final Integer productId) {
         return ResponseEntity.ok(productKingdomService.getAllProductsByProductId(productId));
     }
 
-    @Operation(summary = "Criar um novo produto",
-            description = "Este endpoint cria um novo produto com as informações fornecidas e retorna o produto criado com status 201 Created.")
+    @Operation(summary = "Create a new product",
+            description = "This endpoint creates a new product with the provided information and returns the created product with a 201 Created status.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Produto criado com sucesso",
+                    description = "Product created successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Product.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Requisição mal-formada (dados inválidos)"),
+                    description = "Bad request (invalid data)"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDto product) {
@@ -75,19 +75,19 @@ public class ProductController {
     }
 
 
-    @Operation(summary = "Converter valor do produto para uma moeda específica",
-            description = "Este endpoint converte o valor de um produto para a moeda de destino especificada.")
+    @Operation(summary = "Convert product value to a specific currency",
+            description = "This endpoint converts the value of a product to the specified destination currency.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Valor do produto convertido com sucesso",
+                    description = "Product value converted successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ConvertedProductDto.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Requisição mal-formada (dados inválidos)"),
+                    description = "Bad request (invalid data)"),
             @ApiResponse(responseCode = "404",
-                    description = "Produto de reino ou moeda de destino não encontrados"),
+                    description = "Kingdom product or destination currency not found"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/{productKingdomId}/convert")
     public ResponseEntity<ConvertedProductDto> convertProduct(@PathVariable final Integer productKingdomId,

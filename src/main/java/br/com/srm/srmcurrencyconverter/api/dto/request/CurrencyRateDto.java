@@ -19,22 +19,22 @@ import java.time.LocalDate;
 public class CurrencyRateDto {
 
     @JsonProperty("originCurrencyId")
-    @NotNull(message = "A moeda de origem é obrigatória")
-    @Min(1)
+    @NotNull(message = "Origin currency is required")
+    @Min(value = 1, message = "Origin currency must be a valid ID greater than 0")
     private Integer originCurrencyId;
 
     @JsonProperty("destinyCurrencyId")
-    @NotNull(message = "A moeda de destino é obrigatória")
-    @Min(1)
-    private Integer  destinyCurrencyId;
+    @NotNull(message = "Destination currency is required")
+    @Min(value = 1, message = "Destination currency must be a valid ID greater than 0")
+    private Integer destinyCurrencyId;
 
     @JsonProperty("date")
-    @NotNull(message = "A data é obrigatória")
+    @NotNull(message = "Date is required")
     private LocalDate date;
 
     @JsonProperty("conversionRate")
-    @NotNull(message = "A taxa de conversão é obrigatória")
-    @Positive(message = "A taxa de conversão deve ser maior que zero")
+    @NotNull(message = "Conversion rate is required")
+    @Positive(message = "Conversion rate must be greater than zero")
     private BigDecimal conversionRate;
 
 }

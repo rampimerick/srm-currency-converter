@@ -28,21 +28,21 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/currencies")
-@Tag(name = "Moedas", description = "Gerencia as moedas disponíveis")
+@Tag(name = "Currencies", description = "Manage all available currencies")
 public class CurrencyController {
 
     private final CurrencyService currencyService;
     private final CurrencyConversionService currencyConversionService;
 
-    @Operation(summary = "Obter todas as moedas",
-            description = "Este endpoint retorna uma lista com todas as moedas cadastradas.")
+    @Operation(summary = "Get all currencies",
+            description = "This endpoint returns a list of all registered currencies.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Lista de moedas obtida com sucesso",
+                    description = "List of currencies retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Currency.class))),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping()
     public ResponseEntity<List<Currency>> getProduct() {
@@ -50,48 +50,47 @@ public class CurrencyController {
     }
 
 
-    @Operation(summary = "Obter taxas de conversão de moedas",
-            description = "Este endpoint retorna uma lista com todas as taxas de conversão de moedas cadastradas.")
+    @Operation(summary = "Get all currency conversion rates",
+            description = "This endpoint returns a list of all registered currency conversion rates.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Lista de taxas de conversão obtida com sucesso",
+                    description = "List of conversion rates retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CurrencyConversionRate.class))),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/rates")
     public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRate() {
         return ResponseEntity.ok(currencyConversionService.getAllCurrencyConversionRate());
     }
 
-    @Operation(summary = "Obter histórico de taxas de conversão por moeda de origem",
-            description = "Este endpoint retorna o histórico de taxas de conversão de uma moeda de origem específica.")
+    @Operation(summary = "Get conversion rate history by origin currency",
+            description = "This endpoint returns the conversion rate history for a specific origin currency.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Histórico de taxas de conversão obtido com sucesso",
+                    description = "Conversion rate history retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CurrencyConversionRate.class))),
             @ApiResponse(responseCode = "400",
-                    description = "ID da moeda de origem inválido"),
+                    description = "Invalid origin currency ID"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("{originCurrencyId}/rates/history")
     public ResponseEntity<List<CurrencyConversionRate>> getHistoryCurrencyRateByOriginCurrencyId(@PathVariable Integer originCurrencyId) {
         return ResponseEntity.ok(currencyConversionService.getAllCurrencyRateByOriginCurrencyId(originCurrencyId));
     }
 
-
-    @Operation(summary = "Obter taxas de conversão de moedas para hoje",
-            description = "Este endpoint retorna as taxas de conversão de moedas para a data de hoje.")
+    @Operation(summary = "Get today's currency conversion rates",
+            description = "This endpoint returns today's currency conversion rates.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Taxas de conversão de moedas para o dia de hoje obtidas com sucesso",
+                    description = "Today's conversion rates retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CurrencyConversionRate.class))),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/rates/today")
     public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRateToday() {
@@ -100,34 +99,34 @@ public class CurrencyController {
         return ResponseEntity.ok(currencyConversionService.getCurrencyByDate(today));
     }
 
-    @Operation(summary = "Obter taxas de conversão de moedas para uma data específica",
-            description = "Este endpoint retorna as taxas de conversão de moedas para uma data informada.")
+    @Operation(summary = "Get currency conversion rates by date",
+            description = "This endpoint returns the currency conversion rates for a given date.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Taxas de conversão de moedas para a data especificada obtidas com sucesso",
+                    description = "Conversion rates for the specified date retrieved successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CurrencyConversionRate.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Data inválida fornecida"),
+                    description = "Invalid date provided"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @GetMapping("/rates/date")
     public ResponseEntity<List<CurrencyConversionRate>> getCurrencyConversionRateByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return ResponseEntity.ok(currencyConversionService.getCurrencyByDate(date));
     }
 
-    @Operation(summary = "Criar uma nova taxa de conversão de moeda",
-            description = "Este endpoint cria uma nova taxa de conversão de moeda com os dados fornecidos.")
+    @Operation(summary = "Create a new currency conversion rate",
+            description = "This endpoint creates a new currency conversion rate with the provided data.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Taxa de conversão de moeda criada com sucesso",
+                    description = "Currency conversion rate created successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CurrencyConversionRate.class))),
             @ApiResponse(responseCode = "400",
-                    description = "Requisição mal-formada (dados inválidos fornecidos)"),
+                    description = "Bad request (invalid data provided)"),
             @ApiResponse(responseCode = "500",
-                    description = "Erro interno no servidor")
+                    description = "Internal server error")
     })
     @PostMapping("/rates")
     public ResponseEntity<List<CurrencyConversionRate>> createCurrencyConversionRate(@RequestBody @Valid CurrencyRateDto currencyConversionRate) {
