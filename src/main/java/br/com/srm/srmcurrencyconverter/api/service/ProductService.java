@@ -32,6 +32,10 @@ public class ProductService {
         return productRepository.save(new Product(product));
     }
 
+    public Product getProductById(Integer productId) {
+        return productRepository.findById(productId).orElseThrow(() -> new DataNotFoundException("Product not found", "productId", productId));
+    }
+
     public ConvertedProductDto convertProductValue(final Integer productId, final Integer destinyCurrencyId) {
         ProductKingdom product = productKingdomRepository.findById(productId).orElseThrow(() -> new DataNotFoundException("Product not found", "productId", productId));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

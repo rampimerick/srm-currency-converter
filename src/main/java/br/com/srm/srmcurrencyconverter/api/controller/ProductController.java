@@ -45,14 +45,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @Operation(summary = "Get all kingdom products by product ID", description = "Returns the kingdom products found for the specified product ID")
+    @Operation(summary = "Get a product ID", description = "Returns the product found for the specified product ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product list returned successfully"),
             @ApiResponse(responseCode = "404", description = "No products found")
     })
     @GetMapping("/{productId}")
-    public ResponseEntity<List<ProductKingdom>> getProductByProductId(@PathVariable final Integer productId) {
-        return ResponseEntity.ok(productKingdomService.getAllProductsByProductId(productId));
+    public ResponseEntity<Product> getProductByProductId(@PathVariable final Integer productId) {
+        return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @Operation(summary = "Create a new product",
@@ -73,28 +73,6 @@ public class ProductController {
         URI uri = UriComponentsBuilder.newInstance().path("/api/v1/currencies/{productId}").buildAndExpand(productSave.getProductId()).toUri();
         return ResponseEntity.created(uri).body(productSave);
     }
-
-
-    @Operation(summary = "Convert product value to a specific currency",
-            description = "This endpoint converts the value of a product to the specified destination currency.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Product value converted successfully",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ConvertedProductDto.class))),
-            @ApiResponse(responseCode = "400",
-                    description = "Bad request (invalid data)"),
-            @ApiResponse(responseCode = "404",
-                    description = "Kingdom product or destination currency not found"),
-            @ApiResponse(responseCode = "500",
-                    description = "Internal server error")
-    })
-    @GetMapping("/{productKingdomId}/convert")
-    public ResponseEntity<ConvertedProductDto> convertProduct(@PathVariable final Integer productKingdomId,
-                                                              @RequestParam final Integer destinyCurrencyId) {
-        return ResponseEntity.ok(productService.convertProductValue(productKingdomId, destinyCurrencyId));
-    }
-
 }
 
 
